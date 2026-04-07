@@ -2,7 +2,13 @@ const { posts } = require('../data/dataPosts')
 
 // Rotta bacheca index
 const index = (req, res) => {
-    res.json(posts);
+    if (req.query.tag) {
+        const filteredPosts = posts.filter(element => element.tags.includes(req.query.tag))
+        if (filteredPosts.length === 0) {
+            return res.status(404).json({ message: `${req.query.tag} not found` })
+        }
+        res.json(filteredPosts);
+    }
 };
 
 // Rotta bacheca show
