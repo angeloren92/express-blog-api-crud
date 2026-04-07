@@ -43,7 +43,7 @@ const destroy = (req, res) => {
     if (index !== -1) {
         const postDeleted = posts.splice(index, 1)
         console.log(posts)
-        return res.status(204).json({ message: 'nessun contenuto'})
+        return res.status(204).send()
     } else {
         res.status(404).json({ message: 'not found' })
     }
