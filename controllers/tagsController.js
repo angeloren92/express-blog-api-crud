@@ -7,8 +7,9 @@ const index = (req, res) => {
         if (filteredPosts.length === 0) {
             return res.status(404).json({ message: `${req.query.tag} not found` })
         }
-        res.json(filteredPosts);
+        return res.json(filteredPosts);
     }
+    res.json(posts)
 };
 
 // Rotta bacheca show
@@ -42,7 +43,7 @@ const destroy = (req, res) => {
     if (index !== -1) {
         const postDeleted = posts.splice(index, 1)
         console.log(posts)
-        res.status(204).json({ message: 'deleted' });
+        return res.status(204).json({ message: 'nessun contenuto'})
     } else {
         res.status(404).json({ message: 'not found' })
     }
