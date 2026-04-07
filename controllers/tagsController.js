@@ -35,7 +35,8 @@ const destroy = (req, res) => {
     const index = posts.findIndex(element => element.id === parseInt(req.params.id))
     if (index !== -1) {
         const postDeleted = posts.splice(index, 1)
-        res.json(postDeleted);
+        console.log(posts)
+        res.status(204).json({ message: 'deleted' });
     } else {
         res.status(404).json({ message: 'not found' })
     }
