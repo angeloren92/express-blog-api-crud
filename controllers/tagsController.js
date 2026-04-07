@@ -5,11 +5,13 @@ const index = (req, res) => {
     if (req.query.tag) {
         const filteredPosts = posts.filter(element => element.tags.includes(req.query.tag))
         if (filteredPosts.length === 0) {
-            return res.status(404).json({ message: `${req.query.tag} not found` })
+            res.status(404).json({ message: `${req.query.tag} not found` })
+        } else {
+            res.json(filteredPosts);
         }
-        return res.json(filteredPosts);
+    } else {
+        res.json(posts)
     }
-    res.json(posts)
 };
 
 // Rotta bacheca show
@@ -41,9 +43,9 @@ const modify = (req, res) => {
 const destroy = (req, res) => {
     const index = posts.findIndex(element => element.id === parseInt(req.params.id))
     if (index !== -1) {
-        const postDeleted = posts.splice(index, 1)
+        posts.splice(index, 1)
         console.log(posts)
-        return res.status(204).send()
+        res.status(204).send()
     } else {
         res.status(404).json({ message: 'not found' })
     }
