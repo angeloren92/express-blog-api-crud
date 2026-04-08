@@ -36,7 +36,7 @@ const store = (req, res) => {
         tags: tags
     }
     posts.push(newPost)
-    console.log(posts)
+    console.log(newPost)
     res.send('creazione');
 };
 
