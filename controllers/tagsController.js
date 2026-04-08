@@ -42,8 +42,27 @@ const store = (req, res) => {
 
 // Rotta bacheca update
 const update = (req, res) => {
+    const id = parseInt(req.params.id)
+    const { titolo, contenuto, immagine, tags } = req.body
+    const post = posts.find(element => element.id === id)
+
+    if (!post) {
+        res.status(404)
+
+        return req.json({
+            error: "Not Found",
+            message: "Post non trovato"
+        })
+    }
+
+    post.titolo = titolo 
+    post.contenuto = contenuto
+    post.immagine = immagine
+    post.tags = tags
+
+    console.log(post)
     res.send('modifica integrale ' + req.params.id);
-};
+}
 
 // Rotta bacheca modify
 const modify = (req, res) => {
