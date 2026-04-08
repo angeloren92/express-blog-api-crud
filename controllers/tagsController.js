@@ -29,7 +29,7 @@ const store = (req, res) => {
     const { titolo, contenuto, immagine, tags } = req.body
     const isDuplicate = posts.some(element => element.titolo === titolo)
 
-    if (isDuplicate === false && titolo.length > 3 ) {
+    if (isDuplicate === false && titolo.length > 3) {
         const newId = posts.length + 1
         const newPost = {
             id: newId,
@@ -54,6 +54,7 @@ const update = (req, res) => {
     const { titolo, contenuto, immagine, tags } = req.body
     const id = parseInt(req.params.id)
     const post = posts.find(element => element.id === id)
+    const isDuplicate = posts.some(element => element.titolo === titolo)
 
     if (!post) {
         res.status(404)
@@ -64,13 +65,21 @@ const update = (req, res) => {
         })
     }
 
-    post.titolo = titolo
-    post.contenuto = contenuto
-    post.immagine = immagine
-    post.tags = tags
+    if (isDuplicate === false && titolo.length > 3) {
+        post.titolo = titolo
+        post.contenuto = contenuto
+        post.immagine = immagine
+        post.tags = tags
 
-    console.log(posts)
-    res.send('modifica avvenuta ' + req.params.id);
+        console.log(posts)
+        
+        res.send('modifica avvenuta ' + req.params.id);
+    } else if (titolo.length < 3) {
+        res.status(400).json({ message: 'titolo deve contenere almeno 3 caratteri' })
+
+    } else {
+        res.status(400).json({ message: 'titolo già presente' })
+    }
 }
 
 // Rotta bacheca modify
