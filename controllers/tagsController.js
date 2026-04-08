@@ -44,6 +44,7 @@ const store = (req, res) => {
 const update = (req, res) => {
     const id = parseInt(req.params.id)
     const { titolo, contenuto, immagine, tags } = req.body
+    const index = posts.findIndex(element => element.id === parseInt(req.params.id))
     const post = posts.find(element => element.id === id)
 
     if (!post) {
@@ -55,13 +56,15 @@ const update = (req, res) => {
         })
     }
 
-    post.titolo = titolo 
+    post.titolo = titolo
     post.contenuto = contenuto
     post.immagine = immagine
     post.tags = tags
 
-    console.log(post)
-    res.send('modifica integrale ' + req.params.id);
+    posts.splice(index, 1, post)
+
+    console.log(posts)
+    res.send('modifica avvenuta ' + req.params.id);
 }
 
 // Rotta bacheca modify
