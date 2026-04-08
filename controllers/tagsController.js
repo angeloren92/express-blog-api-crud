@@ -30,7 +30,7 @@ const store = (req, res) => {
     const isDuplicate = posts.some(element => element.titolo === titolo)
 
     if (isDuplicate === false && titolo.length > 3) {
-        const newId = posts.length + 1
+        const newId = posts[posts.length - 1].id + 1
         const newPost = {
             id: newId,
             titolo: titolo,
@@ -72,7 +72,7 @@ const update = (req, res) => {
         post.tags = tags
 
         console.log(posts)
-        
+
         res.send('modifica avvenuta ' + req.params.id);
     } else if (titolo.length < 3) {
         res.status(400).json({ message: 'titolo deve contenere almeno 3 caratteri' })
