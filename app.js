@@ -11,6 +11,8 @@ app.listen(port, () => {
 // Configurazione per servire file statici dalla cartella public
 app.use(express.static('public'));
 
+app.use(express.json());
+
 // Rotta root
 app.get('/', (req, res) => {
     res.send('Server del mio blog');

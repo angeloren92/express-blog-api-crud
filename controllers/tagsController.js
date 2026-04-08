@@ -26,7 +26,18 @@ const show = (req, res) => {
 
 // Rotta bacheca store  
 const store = (req, res) => {
-    res.send('creazione ');
+    const { titolo, contenuto, immagine, tags } = req.body
+    const newId = posts.length + 1
+    const newPost = {
+        id: newId,
+        titolo: titolo,
+        contenuto: contenuto,
+        immagine: immagine,
+        tags: tags
+    }
+    posts.push(newPost)
+    console.log(posts)
+    res.send('creazione');
 };
 
 // Rotta bacheca update
