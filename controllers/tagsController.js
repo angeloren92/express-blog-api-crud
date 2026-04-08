@@ -27,17 +27,26 @@ const show = (req, res) => {
 // Rotta bacheca store  
 const store = (req, res) => {
     const { titolo, contenuto, immagine, tags } = req.body
-    const newId = posts.length + 1
-    const newPost = {
-        id: newId,
-        titolo: titolo,
-        contenuto: contenuto,
-        immagine: immagine,
-        tags: tags
+    const isDuplicate = posts.some(element => element.titolo === titolo)
+
+    if (isDuplicate === false && titolo.length > 3 ) {
+        const newId = posts.length + 1
+        const newPost = {
+            id: newId,
+            titolo: titolo,
+            contenuto: contenuto,
+            immagine: immagine,
+            tags: tags
+        }
+        posts.push(newPost)
+        console.log(posts)
+        res.send('creazione');
+    } else if (titolo.length < 3) {
+        res.status(400).json({ message: 'titolo deve contenere almeno 3 caratteri' })
+
+    } else {
+        res.status(400).json({ message: 'titolo già presente' })
     }
-    posts.push(newPost)
-    console.log(posts)
-    res.send('creazione');
 };
 
 // Rotta bacheca update
