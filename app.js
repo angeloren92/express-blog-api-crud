@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const postsRouter = require('./routes/posts')
+const checkTime = require('./middlewares/checkTime')
 
 // Avvio del server
 app.listen(port, () => {
@@ -12,11 +13,12 @@ app.listen(port, () => {
 app.use(express.static('public'));
 
 app.use(express.json());
+app.use(checkTime);
 
 // Rotta root
 app.get('/', (req, res) => {
     res.send('Server del mio blog');
 });
 
-app.use('/bacheca', postsRouter)
+app.use('/bacheca', postsRouter);
 

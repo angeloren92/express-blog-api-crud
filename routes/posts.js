@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const tagsController = require('../controllers/tagsController')
+const tagsController = require('../controllers/tagsController');
+const isDuplicate = require('../middlewares/isDuplicate');
 
 // Rotta bacheca index
 router.get('/index', tagsController.index);
@@ -9,10 +10,10 @@ router.get('/index', tagsController.index);
 router.get('/:id', tagsController.show);
 
 // Rotta bacheca store  
-router.post('/', tagsController.store);
+router.post('/', isDuplicate, tagsController.store);
 
 // Rotta bacheca update
-router.put('/:id', tagsController.update);
+router.put('/:id', isDuplicate, tagsController.update);
 
 // Rotta bacheca modify
 router.patch('/:id', tagsController.modify);

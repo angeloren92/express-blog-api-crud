@@ -26,60 +26,41 @@ const show = (req, res) => {
 
 // Rotta bacheca store  
 const store = (req, res) => {
-    const { titolo, contenuto, immagine, tags } = req.body
-    const isDuplicate = posts.some(element => element.titolo === titolo)
+    const { titolo, contenuto, immagine, tags } = req.body;
+    const newId = posts.length > 0 ? posts[posts.length - 1].id + 1 : 1;
+    const newPost = {
+        id: newId,
+        titolo,
+        contenuto,
+        immagine,
+        tags
+    };
 
-    if (isDuplicate === false && titolo.length > 3) {
-        const newId = posts[posts.length - 1].id + 1
-        const newPost = {
-            id: newId,
-            titolo: titolo,
-            contenuto: contenuto,
-            immagine: immagine,
-            tags: tags
-        }
-        posts.push(newPost)
-        console.log(posts)
-        res.send('creazione');
-    } else if (titolo.length < 3) {
-        res.status(400).json({ message: 'titolo deve contenere almeno 3 caratteri' })
-
-    } else {
-        res.status(400).json({ message: 'titolo già presente' })
-    }
+    posts.push(newPost);
+    console.log(posts);
+    res.status(201).json(newPost);
 };
 
 // Rotta bacheca update
 const update = (req, res) => {
-    const { titolo, contenuto, immagine, tags } = req.body
-    const id = parseInt(req.params.id)
-    const post = posts.find(element => element.id === id)
-    const isDuplicate = posts.some(element => element.titolo === titolo)
+    const { titolo, contenuto, immagine, tags } = req.body;
+    const id = parseInt(req.params.id);
+    const post = posts.find(element => element.id === id);
 
     if (!post) {
-        res.status(404)
-
-        return req.json({
-            error: "Not Found",
-            message: "Post non trovato"
-        })
+        return res.status(404).json({
+            error: 'Not Found',
+            message: 'Post non trovato'
+        });
     }
 
-    if (isDuplicate === false && titolo.length > 3) {
-        post.titolo = titolo
-        post.contenuto = contenuto
-        post.immagine = immagine
-        post.tags = tags
+    post.titolo = titolo;
+    post.contenuto = contenuto;
+    post.immagine = immagine;
+    post.tags = tags;
 
-        console.log(posts)
-
-        res.send('modifica avvenuta ' + req.params.id);
-    } else if (titolo.length < 3) {
-        res.status(400).json({ message: 'titolo deve contenere almeno 3 caratteri' })
-
-    } else {
-        res.status(400).json({ message: 'titolo già presente' })
-    }
+    console.log(posts);
+    res.json(post);
 }
 
 // Rotta bacheca modify
