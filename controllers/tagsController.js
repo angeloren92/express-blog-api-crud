@@ -4,9 +4,7 @@ const { posts } = require('../data/dataPosts')
 const index = (req, res) => {
     if (req.query.tag) {
         const filteredPosts = posts.filter(element => element.tags.includes(req.query.tag))
-        if (filteredPosts.length === 0) {
-            res.status(404).json({ message: `${req.query.tag} not found` })
-        } else {
+        if (filteredPosts.length !== 0) {
             res.json(filteredPosts);
         }
     } else {

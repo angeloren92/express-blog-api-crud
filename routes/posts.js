@@ -3,6 +3,7 @@ const router = express.Router();
 const tagsController = require('../controllers/tagsController');
 const isDuplicate = require('../middlewares/isDuplicate');
 
+
 // Rotta bacheca index
 router.get('/index', tagsController.index);
 

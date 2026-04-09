@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const postsRouter = require('./routes/posts')
-const checkTime = require('./middlewares/checkTime')
+const checkTime = require('./middlewares/checkTime');
+const checkEndpoint = require('./middlewares/checkEndpoint');
+const errorHandler = require('./middlewares/errorHandler');
 
 // Avvio del server
 app.listen(port, () => {
@@ -21,4 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/bacheca', postsRouter);
+
+app.use(checkEndpoint);
+app.use(errorHandler);
 
